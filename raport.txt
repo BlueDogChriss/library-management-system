@@ -1,0 +1,13 @@
+------------------------------------------------------------------------------
+----------Raport text despre biblioteca---------
+
+Biblioteca are 43 carti
+Fiecare colectie are in medie 6.142857 carti
+Fiecare carte din biblioteca are in medie 257.81396 pagini
+Fiecare carte din colectia EDUCATIONAL are in medie 231.27272 pagini
+Fiecare carte din colectia COMEDIE are in medie 243.33333 pagini
+Fiecare carte din colectia DRAMA are in medie 279.33334 pagini
+Fiecare carte din colectia TRAGEDIE are in medie 258.5 pagini
+Fiecare carte din colectia AVENTURA are in medie 271.0 pagini
+Fiecare carte din colectia POEZIE are in medie 176.0 pagini
+Fiecare carte din colectia DRAGOSTE are in medie 323.0 pagini
