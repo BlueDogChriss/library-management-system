@@ -357,13 +357,12 @@ public class Main {
     }
 
     public static void generareRaportText(Map<String, ColectieCarti> biblioteca) {
-
         try {
             File file = new File("raport.txt");
             file.createNewFile();
             FileWriter writer = new FileWriter(file);
             writer.write("------------------------------------------------------------------------------\n");
-            writer.write("----------Raport text despre biblioteca---------\n\n");
+            writer.write("-------------------------Raport text despre biblioteca------------------------\n\n");
             writer.write("Biblioteca are " + calculNumarCarti(biblioteca) + " carti\n");
             writer.write("Fiecare colectie are in medie " + calculeNumarCartiMediuPeColectie(biblioteca) + " carti\n");
             writer.write("Fiecare carte din biblioteca are in medie " + calculareNumarMediiPaginiTotal(biblioteca)
