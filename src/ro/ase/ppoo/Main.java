@@ -21,10 +21,6 @@ import ro.ase.ppoo.exceptii.InvalidInputString;
 
 public class Main {
 
-    // FUNCTIE IN CARE CALCULEZ NR DE CARTI IMPRUMUTATE DINTR-O COLECTIE INTR-UN
-    // VECTOR;
-    // FUNCTII DE IMPRUMUTA SAU ADU O CARTE INAPOI
-
     final static String welcome = "Bun venit in aplicatia de gestionare a colectiilor de carti a unei biblioteci!";
 
     final static String mainMenu = ("\nSelectati un numar din meniu: \n" + "1. Meniu carti \n" + "2. Meniu colectii \n"
@@ -272,23 +268,23 @@ public class Main {
     }
 
     public static void calculeazaNumarCartiImprumutate(Map<String, ColectieCarti> biblioteca) {
-        int vectorFrecventa[] = new int[7];
+        int vectorOccurence[] = new int[7];
         int index = 0;
         for (Map.Entry<String, ColectieCarti> entry : biblioteca.entrySet()) {
             if (!entry.getValue().colectie.isEmpty()) {
                 for (Carte carte : entry.getValue().colectie) {
-                    vectorFrecventa[index] += (carte.getNrExemplareTotale() - carte.getNrExemplareActual());
+                    vectorOccurence[index] += (carte.getNrExemplareTotale() - carte.getNrExemplareActual());
                 }
             } else {
-                vectorFrecventa[index] = 0;
+                vectorOccurence[index] = 0;
             }
-            System.out.println("Colectia " + entry.getKey() + " are " + vectorFrecventa[index] + " carti imprumutate");
+            System.out.println("Colectia " + entry.getKey() + " are " + vectorOccurence[index] + " carti imprumutate");
             index++;
         }
 
         int suma = 0;
-        for (int i = 0; i < vectorFrecventa.length; i++) {
-            suma += vectorFrecventa[i];
+        for (int i = 0; i < vectorOccurence.length; i++) {
+            suma += vectorOccurence[i];
         }
         System.out.println("In total au fost imprumutate " + suma + " carti din biblioteca");
     }
@@ -339,15 +335,15 @@ public class Main {
     }
 
     public static float calculeNumarCartiMediuPeColectie(Map<String, ColectieCarti> biblioteca) {
-        String vectorFrecventa[] = new String[7];
+        String vectorOccurence[] = new String[7];
         int counter = 0;
         float medie = 0;
         for (Map.Entry<String, ColectieCarti> entry : biblioteca.entrySet()) {
-            vectorFrecventa[counter] = String.valueOf(entry.getValue().colectie.size());
+            vectorOccurence[counter] = String.valueOf(entry.getValue().colectie.size());
             counter++;
         }
-        for (int i = 0; i < vectorFrecventa.length; i++) {
-            medie += Integer.parseInt(vectorFrecventa[i]);
+        for (int i = 0; i < vectorOccurence.length; i++) {
+            medie += Integer.parseInt(vectorOccurence[i]);
         }
         if (medie != 0) {
             return medie / counter;
@@ -361,7 +357,6 @@ public class Main {
             File file = new File("raport.txt");
             file.createNewFile();
             FileWriter writer = new FileWriter(file);
-            writer.write("------------------------------------------------------------------------------\n");
             writer.write("-------------------------Raport text despre biblioteca------------------------\n\n");
             writer.write("Biblioteca are " + calculNumarCarti(biblioteca) + " carti\n");
             writer.write("Fiecare colectie are in medie " + calculeNumarCartiMediuPeColectie(biblioteca) + " carti\n");
@@ -373,7 +368,7 @@ public class Main {
             }
             writer.close();
 
-            System.out.println("Raportul a fost generat cu succes cu numele de " + file.getName());
+            System.out.println("Raportul a fost generat cu succes!");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -392,27 +387,25 @@ public class Main {
         ColectieCarti colectieDragoste = new ColectieCarti();
         ColectieCarti colectieEducational = new ColectieCarti();
 
-		colectieAventura.colectie.add(new Carte("id-01-01", "Narnia", "C. S. Lewis", "Corint", 301, GenCarte.AVENTURA, 1, 4));
-		colectieAventura.colectie.add(new Carte("id-01-02", "Harry Potter", "J. K. Rowling", "Corint", 241, GenCarte.AVENTURA, 5, 7));
-		colectiePoezie.colectie.add(new Carte("id-02-01", "Poezii", "M. Eminescu", "Trei", 180, GenCarte.POEZIE, 9, 12));
-		colectiePoezie.colectie.add(new Carte("id-02-02", "Cuvinte Potrivite", "T. Arghezi", "Tei", 172, GenCarte.POEZIE, 8, 8));
-		colectieDrama.colectie.add(new Carte("id-03-01", "Romeo si Julieta", "W. Shakespeare", "Trei", 281, GenCarte.DRAMA, 5, 9));
-		colectieDrama.colectie.add(new Carte("id-03-02", "MacBeth", "W. Shakespeare", "Corint", 241, GenCarte.DRAMA, 3, 3));
-		colectieDrama.colectie.add(new Carte("id-03-03", "Hamlet", "W. Shakespeare", "Trei", 316, GenCarte.DRAMA, 8, 8));
-		colectieComedie.colectie.add(new Carte("id-04-01", "Divina Comedie", "Dante Alighieri", "Aramis", 402, GenCarte.COMEDIE, 7, 7));
-		colectieComedie.colectie.add(new Carte("id-04-02", "Jurnalul Unui Pusti", "Jeff Kinney", "Tei", 172, GenCarte.COMEDIE, 8, 9));
-		colectieComedie.colectie.add(new Carte("id-04-03", "Jurnalul Unui Pusti 2", "Jeff Kinney", "Tei", 156, GenCarte.COMEDIE, 4, 6));
-		colectieTragedie.colectie.add(new Carte("id-05-01", "Faust", "J. Goethe", "Trei", 327, GenCarte.TRAGEDIE, 7, 7));
-		colectieTragedie.colectie.add(new Carte("id-05-02", "Iliada", "Homer", "Corint", 190, GenCarte.TRAGEDIE, 9, 9));
-		colectieDragoste.colectie.add(new Carte("id-06-01", "Anna Karenina", "L. Tolstoy", "Corint", 281, GenCarte.DRAGOSTE, 5, 5));
-		colectieDragoste.colectie.add(new Carte("id-06-02", "Ultima Noapte", "C. Petrescu", "Aramis", 312, GenCarte.DRAGOSTE, 1, 3));
-		colectieDragoste.colectie.add(new Carte("id-06-03", "Mandrie si Prejudecata", "J. Austen", "Tei", 327, GenCarte.DRAGOSTE, 1, 6));
-		colectieEducational.colectie.add(new Carte("id-07-01", "Manual Matematica Liceu", "Ministerul Educatiei", "Corint", 218, GenCarte.EDUCATIONAL, 7, 7));
-		colectieDragoste.colectie.add(new Carte("id-06-04", "La rascruce de vanturi", "Emily Bronte", "Aramis", 372, GenCarte.DRAGOSTE, 2, 4));
-		colectieEducational.colectie.add(new Carte("id-07-02", "Manual Fizica Liceu", "Ministerul Educatiei", "Corint", 190, GenCarte.EDUCATIONAL, 3, 5));
-		colectieEducational.colectie.add(new Carte("id-07-03", "Manual Chimie Liceu", "Ministerul Educatiei", "Aramis", 267, GenCarte.EDUCATIONAL, 7, 13));
-		colectieEducational.colectie.add(new Carte("id-07-04", "Manual Biologie Liceu", "Ministerul Educatiei", "Aramis", 252, GenCarte.EDUCATIONAL, 7, 9));
-		colectieEducational.colectie.add(new Carte("id-07-05", "Manual Informatica Liceu", "Ministerul Educatiei", "Corint", 280, GenCarte.EDUCATIONAL, 10, 12));
+//		colectieAventura.colectie.add(new Carte("id-01-01", "Moby Dick", "Herman Melville ", "ART", 500, GenCarte.AVENTURA, 3, 7));
+//		colectieAventura.colectie.add(new Carte("id-01-02", "mpăratul muștelor", "William Golding", "Humanitas", 425, GenCarte.AVENTURA, 1, 23));
+// 		colectieAventura.colectie.add(new Carte("id-01-03", "Harry Potter", "J. K. Rowling", "Corint", 241, GenCarte.AVENTURA, 5, 7));
+//		colectiePoezie.colectie.add(new Carte("id-02-01", "Poezii", "M. Eminescu", "ART", 180, GenCarte.POEZIE, 9, 12));
+//		colectiePoezie.colectie.add(new Carte("id-02-02", "Poezii", "Vasile Alecsandri", "Teora", 100, GenCarte.POEZIE, 8, 8));
+//		colectiePoezie.colectie.add(new Carte("id-02-03", "Poezia", "Mircea Cartarescu", "Humanitas", 200, GenCarte.POEZIE, 8, 8));
+//		colectieDrama.colectie.add(new Carte("id-03-01", "Romeo si Julieta", "W. Shakespeare", "ART", 281, GenCarte.DRAMA, 1, 20));
+//		colectieComedie.colectie.add(new Carte("id-04-01", "2 Loturi", "I. L. Caragiale", "Aramis", 402, GenCarte.COMEDIE, 7, 7));
+//		colectieComedie.colectie.add(new Carte("id-04-02", "Jurnalul Unui Burlac", "Mihai Bendeac", "Humanitas", 300, GenCarte.COMEDIE, 0, 9));
+//		colectieComedie.colectie.add(new Carte("id-04-03", "O scrisoare pierduta", "I. L. Caragiale", "Aramis", 389, GenCarte.COMEDIE, 4, 6));
+//		colectieTragedie.colectie.add(new Carte("id-05-01", "Iliada", "Homer", "Corint", 190, GenCarte.TRAGEDIE, 9, 9));
+//		colectieDragoste.colectie.add(new Carte("id-06-01", "Inainte Sa Te Cunosc", "Jojo Moyes", "ART", 589, GenCarte.DRAGOSTE, 2, 5));
+//		colectieDragoste.colectie.add(new Carte("id-06-02", "Pe Aripile Vantului", "Margaret Mitchell", "Aramis", 312, GenCarte.DRAGOSTE, 1, 10));
+//		colectieDragoste.colectie.add(new Carte("id-06-04", "Maitreyi", "Mircea Eliade", "Humanitas", 280, GenCarte.DRAGOSTE, 1, 4));
+//		colectieEducational.colectie.add(new Carte("id-07-01", "Manual Matematica Liceu", "Ministerul Educatiei", "Teora", 218, GenCarte.EDUCATIONAL, 7, 7));
+//		colectieEducational.colectie.add(new Carte("id-07-02", "Manual Fizica Liceu", "Ministerul Educatiei", "Teora", 190, GenCarte.EDUCATIONAL, 3, 5));
+//		colectieEducational.colectie.add(new Carte("id-07-03", "Manual Chimie Liceu", "Ministerul Educatiei", "Teora", 267, GenCarte.EDUCATIONAL, 7, 13));
+//		colectieEducational.colectie.add(new Carte("id-07-04", "Manual Biologie Liceu", "Ministerul Educatiei", "Teora", 252, GenCarte.EDUCATIONAL, 7, 9));
+//		colectieEducational.colectie.add(new Carte("id-07-05", "Manual Informatica Liceu", "Ministerul Educatiei", "Teora", 280, GenCarte.EDUCATIONAL, 10, 12));
 
         Map<String, ColectieCarti> biblioteca = new HashMap<String, ColectieCarti>();
         biblioteca.put(GenCarte.AVENTURA.toString(), colectieAventura);
@@ -499,26 +492,26 @@ public class Main {
                                 System.out.println("Adaugati o carte");
                                 searchBar = consoleInput.nextLine();
 
-                                searchBar = citesteString(consoleInput, "id-ul(seria)");
+                                searchBar = citesteString(consoleInput, "id-ul");
                                 id = searchBar;
 
-                                searchBar = citesteString(consoleInput, "numele cartii");
+                                searchBar = citesteString(consoleInput, "Precizati Numele Cartii:");
                                 nume = searchBar;
 
-                                searchBar = citesteString(consoleInput, "numele autorului");
+                                searchBar = citesteString(consoleInput, "Precizati Autorul:");
                                 autor = searchBar;
 
-                                searchBar = citesteString(consoleInput, "numele editurii");
+                                searchBar = citesteString(consoleInput, "Numele Editurii:");
                                 editura = searchBar;
 
-                                searchNumbersBar = citesteInt(consoleInput, "numarul de pagini");
+                                searchNumbersBar = citesteInt(consoleInput, "Introduceti Numarul de pagini:");
                                 nrPagini = searchNumbersBar;
 
                                 searchBar = consoleInput.nextLine();
-                                searchBar = citesteGenCarte(consoleInput, "genul cartii");
+                                searchBar = citesteGenCarte(consoleInput, "Genul Cartii:");
                                 tipCarte = GenCarte.valueOf(searchBar.toUpperCase());
 
-                                searchNumbersBar = citesteInt(consoleInput, "numarul de exemplare primite de biblioteca");
+                                searchNumbersBar = citesteInt(consoleInput, "Precizati Numarul de exemplare primite:");
                                 nrExemplareTotale = searchNumbersBar;
 
                                 Carte carte = new Carte(id, nume, autor, editura, nrPagini, tipCarte, nrExemplareTotale,
@@ -546,7 +539,7 @@ public class Main {
                                         biblioteca.get(GenCarte.TRAGEDIE.toString()).colectie.add(carte);
                                         break;
                                 }
-                                System.out.println("Carte adaugata cu succes");
+                                System.out.println("Cartea Dumneavoastra a fost adaugata cu succes in sistem!");
                                 break;
                             case 4:
                                 searchBar = consoleInput.nextLine();
