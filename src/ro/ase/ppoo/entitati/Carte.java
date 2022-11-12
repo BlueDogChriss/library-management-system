@@ -7,7 +7,7 @@ public class Carte implements Serializable {
     private String nume;
     private String autor;
     private String editura;
-    private int nrPagini;
+    private float nota;
     private GenCarte tipCarte;
     private int nrExemplareActual;
     private int nrExemplareTotale;
@@ -15,14 +15,14 @@ public class Carte implements Serializable {
     public Carte() {
     }
 
-    public Carte(String id, String nume, String autor, String editura, int nrPagini, GenCarte tipCarte,
+    public Carte(String id, String nume, String autor, String editura, float nota, GenCarte tipCarte,
                  int nrExemplareActual, int nrExemplareTotale) {
         super();
         this.id = id;
         this.nume = nume;
         this.autor = autor;
         this.editura = editura;
-        this.nrPagini = nrPagini;
+        this.nota = nota;
         this.tipCarte = tipCarte;
         this.nrExemplareActual = nrExemplareActual;
         this.nrExemplareTotale = nrExemplareTotale;
@@ -60,12 +60,12 @@ public class Carte implements Serializable {
         this.editura = editura;
     }
 
-    public int getNrPagini() {
-        return nrPagini;
+    public float getNota() {
+        return nota;
     }
 
-    public void setNrPagini(int nrPagini) {
-        this.nrPagini = nrPagini;
+    public void setNota(int nota) {
+        this.nota = nota;
     }
 
     public GenCarte getTipCarte() {
@@ -94,10 +94,15 @@ public class Carte implements Serializable {
 
     @Override
     public String toString() {
-        return "Carte [id=" + id + ", nume=" + nume + ", autor=" + autor + ", editura=" + editura + ", nrPagini="
-                + nrPagini + ", tipCarte=" + tipCarte + ", nrExemplareActual=" + nrExemplareActual
-                + ", nrExemplareTotale=" + nrExemplareTotale + "]";
+        return "Carte{" +
+                "id='" + id + '\'' +
+                ", nume='" + nume + '\'' +
+                ", autor='" + autor + '\'' +
+                ", editura='" + editura + '\'' +
+                ", nota=" + nota +
+                ", tipCarte=" + tipCarte +
+                ", nrExemplareActual=" + nrExemplareActual +
+                ", nrExemplareTotale=" + nrExemplareTotale +
+                '}';
     }
-
-
 }
