@@ -104,7 +104,7 @@ public class Functii {
 
     public static String citesteString(Scanner consoleInput, String msg) {
         String searchBar;
-        System.out.println("Introduceti " + msg + ":");
+        System.out.println(msg);
         searchBar = consoleInput.nextLine();
         try {
             if (searchBar.length() < 5 || searchBar.length() > 30) {

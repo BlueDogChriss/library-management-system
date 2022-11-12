@@ -114,26 +114,26 @@ public class Main {
                                 System.out.println("Adaugati o carte");
                                 searchBar = consoleInput.nextLine();
 
-                                searchBar = citesteString(consoleInput, "id-ul (ex: id-idColectie-idCarte)");
+                                searchBar = citesteString(consoleInput, "Introduceti id-ul (ex: id-idColectie-idCarte): ");
                                 id = searchBar;
 
-                                searchBar = citesteString(consoleInput, "Numele Cartii:");
+                                searchBar = citesteString(consoleInput, "Precizati Numele Cartii: ");
                                 nume = searchBar;
 
-                                searchBar = citesteString(consoleInput, "Autorul:");
+                                searchBar = citesteString(consoleInput, "Introduceti Numele Autorul: ");
                                 autor = searchBar;
 
-                                searchBar = citesteString(consoleInput, "Numele Editurii:");
+                                searchBar = citesteString(consoleInput, "Numele Editurii: ");
                                 editura = searchBar;
 
-                                searchNumbersBar = citesteInt(consoleInput, "Introduceti Nota Cartii:");
+                                searchNumbersBar = citesteInt(consoleInput, "Introduceti Nota Cartii: ");
                                 nota = searchNumbersBar;
 
                                 searchBar = consoleInput.nextLine();
-                                searchBar = citesteGenCarte(consoleInput, "Genul Cartii:");
+                                searchBar = citesteGenCarte(consoleInput, "Precizati Genul Cartii (din ce colectie face parte): ");
                                 tipCarte = GenCarte.valueOf(searchBar.toUpperCase());
 
-                                searchNumbersBar = citesteInt(consoleInput, "Precizati Numarul de exemplare primite:");
+                                searchNumbersBar = citesteInt(consoleInput, "Precizati Numarul de exemplare primite: ");
                                 nrExemplareTotale = searchNumbersBar;
 
                                 Carte carte = new Carte(id, nume, autor, editura, nota, tipCarte, nrExemplareTotale, nrExemplareTotale);
