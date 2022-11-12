@@ -12,7 +12,7 @@ public class ColectieCarti {
     }
 
     public void afisare() {
-        if(this.colectie.isEmpty()) {
+        if (this.colectie.isEmpty()) {
             System.out.println("Colectia nu contine nici o carte");
         } else {
             for (Carte carte : colectie) {
@@ -21,7 +21,6 @@ public class ColectieCarti {
         }
 
     }
-
 
 
 }

@@ -1,17 +1,5 @@
 package ro.ase.ppoo;
 
-import java.io.EOFException;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
-
 import ro.ase.ppoo.entitati.Carte;
 import ro.ase.ppoo.entitati.ColectieCarti;
 import ro.ase.ppoo.entitati.GenCarte;
@@ -19,21 +7,27 @@ import ro.ase.ppoo.exceptii.InvalidInputEnum;
 import ro.ase.ppoo.exceptii.InvalidInputNumber;
 import ro.ase.ppoo.exceptii.InvalidInputString;
 
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+
 public class Main {
 
-    final static String welcome = "Bun venit in aplicatia de gestionare a colectiilor de carti a unei biblioteci!";
+    private final static String welcome = "Bun venit in aplicatia de gestionare a Bibliotecii X!";
 
-    final static String mainMenu = ("\nSelectati un numar din meniu: \n" + "1. Meniu carti \n" + "2. Meniu colectii \n"
+    private final static String mainMenu = ("\nSelectati un numar din meniu: \n" + "1. Meniu carti \n" + "2. Meniu colectii \n"
             + "3. Meniu biblioteca \n" + "4. Iesire ");
 
-    final static String booksMenu = ("\nSelectati un numar din meniu: \n" + "1. Afiseaza toate cartile \n"
+    private final static String booksMenu = ("\nSelectati un numar din meniu: \n" + "1. Afiseaza toate cartile \n"
             + "2. Afisare carte dupa nume \n" + "3. Adauga o carte \n" + "4. Sterge o carte dupa nume \n"
             + "5. Imprumuta o carte \n" + "6. Returneaza o carte \n" + "7. Iesire ");
 
-    final static String colectionsMenu = ("\nSelectati un numar din meniu: \n" + "1. Afiseaza toate colectiile \n"
+    private final static String colectionsMenu = ("\nSelectati un numar din meniu: \n" + "1. Afiseaza toate colectiile \n"
             + "2. Afisare colectie dupa nume \n" + "3. Calculeaza numarul de carti imprumutate \n" + "4. Iesire ");
 
-    final static String libraryMenu = ("\nSelectati un numar din meniu: \n" + "1. Afiseaza toate cartile \n"
+    private final static String libraryMenu = ("\nSelectati un numar din meniu: \n" + "1. Afiseaza toate cartile \n"
             + "2. Generare raport biblioteca \n" + "3. Iesire ");
 
     public static void afisareBiblioteca(Map<String, ColectieCarti> biblioteca) {
@@ -66,8 +60,8 @@ public class Main {
                         case COMEDIE:
                             biblioteca.get(GenCarte.COMEDIE.toString()).colectie.add(carte);
                             break;
-                        case DRAGOSTE:
-                            biblioteca.get(GenCarte.DRAGOSTE.toString()).colectie.add(carte);
+                        case ROMANCE:
+                            biblioteca.get(GenCarte.ROMANCE.toString()).colectie.add(carte);
                             break;
                         case DRAMA:
                             biblioteca.get(GenCarte.DRAMA.toString()).colectie.add(carte);
@@ -116,7 +110,7 @@ public class Main {
         for (Map.Entry<String, ColectieCarti> entry : biblioteca.entrySet()) {
             if (!entry.getValue().colectie.isEmpty()) {
                 for (Carte carte : entry.getValue().colectie) {
-                    if (carte.getNume().toLowerCase().equals(nume.toLowerCase())) {
+                    if (carte.getNume().equalsIgnoreCase(nume)) {
                         System.out.println(carte);
                         return true;
                     }
@@ -177,36 +171,32 @@ public class Main {
     }
 
     public static boolean matchStringWithEnum(String input) {
-        if (input.toLowerCase().equals(GenCarte.AVENTURA.toString().toLowerCase())) {
+        if (input.equalsIgnoreCase(GenCarte.AVENTURA.toString())) {
             return true;
         }
-        if (input.toLowerCase().equals(GenCarte.COMEDIE.toString().toLowerCase())) {
+        if (input.equalsIgnoreCase(GenCarte.COMEDIE.toString())) {
             return true;
         }
-        if (input.toLowerCase().equals(GenCarte.DRAGOSTE.toString().toLowerCase())) {
+        if (input.equalsIgnoreCase(GenCarte.ROMANCE.toString())) {
             return true;
         }
-        if (input.toLowerCase().equals(GenCarte.DRAMA.toString().toLowerCase())) {
+        if (input.equalsIgnoreCase(GenCarte.DRAMA.toString())) {
             return true;
         }
-        if (input.toLowerCase().equals(GenCarte.EDUCATIONAL.toString().toLowerCase())) {
+        if (input.equalsIgnoreCase(GenCarte.EDUCATIONAL.toString())) {
             return true;
         }
-        if (input.toLowerCase().equals(GenCarte.POEZIE.toString().toLowerCase())) {
+        if (input.equalsIgnoreCase(GenCarte.POEZIE.toString())) {
             return true;
         }
-        if (input.toLowerCase().equals(GenCarte.TRAGEDIE.toString().toLowerCase())) {
-            return true;
-        }
-
-        return false;
+        return input.equalsIgnoreCase(GenCarte.TRAGEDIE.toString());
     }
 
     public static void stergeCarte(String nume, Map<String, ColectieCarti> biblioteca) {
         for (Map.Entry<String, ColectieCarti> entry : biblioteca.entrySet()) {
             if (!entry.getValue().colectie.isEmpty()) {
                 for (Carte carte : entry.getValue().colectie) {
-                    if (carte.getNume().toLowerCase().equals(nume.toLowerCase())) {
+                    if (carte.getNume().equalsIgnoreCase(nume)) {
                         entry.getValue().colectie.remove(carte);
                         System.out.println("Cartea a fost stearsa cu succes");
                         return;
@@ -221,7 +211,7 @@ public class Main {
         for (Map.Entry<String, ColectieCarti> entry : biblioteca.entrySet()) {
             if (!entry.getValue().colectie.isEmpty()) {
                 for (Carte carte : entry.getValue().colectie) {
-                    if (carte.getNume().toLowerCase().equals(nume.toLowerCase())) {
+                    if (carte.getNume().equalsIgnoreCase(nume)) {
                         if (carte.getNrExemplareActual() > 0) {
                             carte.setNrExemplareActual(carte.getNrExemplareActual() - 1);
                             System.out.println("Cartea a fost imprumutata!");
@@ -241,7 +231,7 @@ public class Main {
         for (Map.Entry<String, ColectieCarti> entry : biblioteca.entrySet()) {
             if (!entry.getValue().colectie.isEmpty()) {
                 for (Carte carte : entry.getValue().colectie) {
-                    if (carte.getNume().toLowerCase().equals(nume.toLowerCase())) {
+                    if (carte.getNume().equalsIgnoreCase(nume)) {
                         if (carte.getNrExemplareActual() < carte.getNrExemplareTotale()) {
                             carte.setNrExemplareActual(carte.getNrExemplareActual() + 1);
                             System.out.println("Cartea a fost returnata!");
@@ -259,7 +249,7 @@ public class Main {
 
     public static void afiseazaColectie(String nume, Map<String, ColectieCarti> biblioteca) {
         for (Map.Entry<String, ColectieCarti> entry : biblioteca.entrySet()) {
-            if (entry.getKey().toLowerCase().equals(nume.toLowerCase())) {
+            if (entry.getKey().equalsIgnoreCase(nume)) {
                 entry.getValue().afisare();
                 return;
             }
@@ -268,7 +258,7 @@ public class Main {
     }
 
     public static void calculeazaNumarCartiImprumutate(Map<String, ColectieCarti> biblioteca) {
-        int vectorOccurence[] = new int[7];
+        int[] vectorOccurence = new int[7];
         int index = 0;
         for (Map.Entry<String, ColectieCarti> entry : biblioteca.entrySet()) {
             if (!entry.getValue().colectie.isEmpty()) {
@@ -292,7 +282,7 @@ public class Main {
     public static float calculareNumarMediiPaginiColectie(String nume, Map<String, ColectieCarti> biblioteca) {
         float medie = 0;
         for (Map.Entry<String, ColectieCarti> entry : biblioteca.entrySet()) {
-            if (entry.getKey().toLowerCase().equals(nume.toLowerCase())) {
+            if (entry.getKey().equalsIgnoreCase(nume)) {
                 if (!entry.getValue().colectie.isEmpty()) {
                     for (Carte carte : entry.getValue().colectie) {
                         medie += carte.getNrPagini();
@@ -335,7 +325,7 @@ public class Main {
     }
 
     public static float calculeNumarCartiMediuPeColectie(Map<String, ColectieCarti> biblioteca) {
-        String vectorOccurence[] = new String[7];
+        String[] vectorOccurence = new String[7];
         int counter = 0;
         float medie = 0;
         for (Map.Entry<String, ColectieCarti> entry : biblioteca.entrySet()) {
@@ -384,7 +374,7 @@ public class Main {
         ColectieCarti colectieDrama = new ColectieCarti();
         ColectieCarti colectieComedie = new ColectieCarti();
         ColectieCarti colectieTragedie = new ColectieCarti();
-        ColectieCarti colectieDragoste = new ColectieCarti();
+        ColectieCarti colectieRomance = new ColectieCarti();
         ColectieCarti colectieEducational = new ColectieCarti();
 
 //		colectieAventura.colectie.add(new Carte("id-01-01", "Moby Dick", "Herman Melville ", "ART", 500, GenCarte.AVENTURA, 3, 7));
@@ -398,9 +388,9 @@ public class Main {
 //		colectieComedie.colectie.add(new Carte("id-04-02", "Jurnalul Unui Burlac", "Mihai Bendeac", "Humanitas", 300, GenCarte.COMEDIE, 0, 9));
 //		colectieComedie.colectie.add(new Carte("id-04-03", "O scrisoare pierduta", "I. L. Caragiale", "Aramis", 389, GenCarte.COMEDIE, 4, 6));
 //		colectieTragedie.colectie.add(new Carte("id-05-01", "Iliada", "Homer", "Corint", 190, GenCarte.TRAGEDIE, 9, 9));
-//		colectieDragoste.colectie.add(new Carte("id-06-01", "Inainte Sa Te Cunosc", "Jojo Moyes", "ART", 589, GenCarte.DRAGOSTE, 2, 5));
-//		colectieDragoste.colectie.add(new Carte("id-06-02", "Pe Aripile Vantului", "Margaret Mitchell", "Aramis", 312, GenCarte.DRAGOSTE, 1, 10));
-//		colectieDragoste.colectie.add(new Carte("id-06-04", "Maitreyi", "Mircea Eliade", "Humanitas", 280, GenCarte.DRAGOSTE, 1, 4));
+//		colectieRomance.colectie.add(new Carte("id-06-01", "Inainte Sa Te Cunosc", "Jojo Moyes", "ART", 589, GenCarte.ROMANCE, 2, 5));
+//		colectieRomance.colectie.add(new Carte("id-06-02", "Pe Aripile Vantului", "Margaret Mitchell", "Aramis", 312, GenCarte.ROMANCE, 1, 10));
+//		colectieRomance.colectie.add(new Carte("id-06-04", "Maitreyi", "Mircea Eliade", "Humanitas", 280, GenCarte.ROMANCE, 1, 4));
 //		colectieEducational.colectie.add(new Carte("id-07-01", "Manual Matematica Liceu", "Ministerul Educatiei", "Teora", 218, GenCarte.EDUCATIONAL, 7, 7));
 //		colectieEducational.colectie.add(new Carte("id-07-02", "Manual Fizica Liceu", "Ministerul Educatiei", "Teora", 190, GenCarte.EDUCATIONAL, 3, 5));
 //		colectieEducational.colectie.add(new Carte("id-07-03", "Manual Chimie Liceu", "Ministerul Educatiei", "Teora", 267, GenCarte.EDUCATIONAL, 7, 13));
@@ -413,7 +403,7 @@ public class Main {
         biblioteca.put(GenCarte.DRAMA.toString(), colectieDrama);
         biblioteca.put(GenCarte.COMEDIE.toString(), colectieComedie);
         biblioteca.put(GenCarte.TRAGEDIE.toString(), colectieTragedie);
-        biblioteca.put(GenCarte.DRAGOSTE.toString(), colectieDragoste);
+        biblioteca.put(GenCarte.ROMANCE.toString(), colectieRomance);
         biblioteca.put(GenCarte.EDUCATIONAL.toString(), colectieEducational);
 
         File file = new File("carti.txt");
@@ -424,7 +414,7 @@ public class Main {
             e.printStackTrace();
         }
 
-        System.out.println(welcome);
+        System.out.println(getWelcome());
         int menuSelection;
         int specificMenuSelection;
 
@@ -437,22 +427,22 @@ public class Main {
         int nrExemplareTotale;
 
         do {
-            System.out.println(mainMenu);
+            System.out.println(getMainMenu());
             menuSelection = consoleInput.nextInt();
             if (menuSelection < 1 || menuSelection > 5) {
                 System.out.println("Eroare! Selectia dvs nu exista.");
-                System.out.println(mainMenu);
+                System.out.println(getMainMenu());
                 menuSelection = consoleInput.nextInt();
             }
 
             switch (menuSelection) {
                 case 1:
                     do {
-                        System.out.println(booksMenu);
+                        System.out.println(getBooksMenu());
                         specificMenuSelection = consoleInput.nextInt();
                         if (specificMenuSelection < 1 || specificMenuSelection > 7) {
                             System.out.println("Eroare! Selectia dvs nu exista.");
-                            System.out.println(booksMenu);
+                            System.out.println(getBooksMenu());
                             specificMenuSelection = consoleInput.nextInt();
                         }
                         switch (specificMenuSelection) {
@@ -477,7 +467,7 @@ public class Main {
                                         System.out.println("Scrieti numele cartii:");
                                         searchBar = consoleInput.nextLine();
                                     }
-                                    if (searchBar.toLowerCase().equals("stop")) {
+                                    if (searchBar.equalsIgnoreCase("stop")) {
                                         isFound = true;
                                     } else {
                                         isFound = afiseazaCarteDupaNume(searchBar, biblioteca);
@@ -523,8 +513,8 @@ public class Main {
                                     case COMEDIE:
                                         biblioteca.get(GenCarte.COMEDIE.toString()).colectie.add(carte);
                                         break;
-                                    case DRAGOSTE:
-                                        biblioteca.get(GenCarte.DRAGOSTE.toString()).colectie.add(carte);
+                                    case ROMANCE:
+                                        biblioteca.get(GenCarte.ROMANCE.toString()).colectie.add(carte);
                                         break;
                                     case DRAMA:
                                         biblioteca.get(GenCarte.DRAMA.toString()).colectie.add(carte);
@@ -582,11 +572,11 @@ public class Main {
                 case 2:
                     String searchBar;
                     do {
-                        System.out.println(colectionsMenu);
+                        System.out.println(getColectionsMenu());
                         specificMenuSelection = consoleInput.nextInt();
                         if (specificMenuSelection < 1 || specificMenuSelection > 4) {
                             System.out.println("Eroare! Selectia dvs nu exista.");
-                            System.out.println(colectionsMenu);
+                            System.out.println(getColectionsMenu());
                             specificMenuSelection = consoleInput.nextInt();
                         }
                         switch (specificMenuSelection) {
@@ -614,11 +604,11 @@ public class Main {
 
                 case 3:
                     do {
-                        System.out.println(libraryMenu);
+                        System.out.println(getLibraryMenu());
                         specificMenuSelection = consoleInput.nextInt();
                         if (specificMenuSelection < 1 || specificMenuSelection > 3) {
                             System.out.println("Eroare! Selectia dvs nu exista.");
-                            System.out.println(libraryMenu);
+                            System.out.println(getLibraryMenu());
                             specificMenuSelection = consoleInput.nextInt();
                         }
                         switch (specificMenuSelection) {
@@ -649,4 +639,23 @@ public class Main {
 
     }
 
+    public static String getWelcome() {
+        return welcome;
+    }
+
+    public static String getMainMenu() {
+        return mainMenu;
+    }
+
+    public static String getBooksMenu() {
+        return booksMenu;
+    }
+
+    public static String getColectionsMenu() {
+        return colectionsMenu;
+    }
+
+    public static String getLibraryMenu() {
+        return libraryMenu;
+    }
 }

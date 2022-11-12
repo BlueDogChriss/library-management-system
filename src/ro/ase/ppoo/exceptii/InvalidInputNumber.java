@@ -1,6 +1,6 @@
 package ro.ase.ppoo.exceptii;
 
-public class InvalidInputNumber extends Exception{
+public class InvalidInputNumber extends Exception {
 
 }
 

@@ -2,7 +2,7 @@ package ro.ase.ppoo.entitati;
 
 import java.io.Serializable;
 
-public class Carte implements Serializable{
+public class Carte implements Serializable {
     private String id;
     private String nume;
     private String autor;
@@ -11,6 +11,22 @@ public class Carte implements Serializable{
     private GenCarte tipCarte;
     private int nrExemplareActual;
     private int nrExemplareTotale;
+
+    public Carte() {
+    }
+
+    public Carte(String id, String nume, String autor, String editura, int nrPagini, GenCarte tipCarte,
+                 int nrExemplareActual, int nrExemplareTotale) {
+        super();
+        this.id = id;
+        this.nume = nume;
+        this.autor = autor;
+        this.editura = editura;
+        this.nrPagini = nrPagini;
+        this.tipCarte = tipCarte;
+        this.nrExemplareActual = nrExemplareActual;
+        this.nrExemplareTotale = nrExemplareTotale;
+    }
 
     public String getId() {
         return id;
@@ -76,28 +92,12 @@ public class Carte implements Serializable{
         this.nrExemplareTotale = nrExemplareTotale;
     }
 
-    public Carte(String id, String nume, String autor, String editura, int nrPagini, GenCarte tipCarte,
-                 int nrExemplareActual, int nrExemplareTotale) {
-        super();
-        this.id = id;
-        this.nume = nume;
-        this.autor = autor;
-        this.editura = editura;
-        this.nrPagini = nrPagini;
-        this.tipCarte = tipCarte;
-        this.nrExemplareActual = nrExemplareActual;
-        this.nrExemplareTotale = nrExemplareTotale;
-    }
-
     @Override
     public String toString() {
         return "Carte [id=" + id + ", nume=" + nume + ", autor=" + autor + ", editura=" + editura + ", nrPagini="
                 + nrPagini + ", tipCarte=" + tipCarte + ", nrExemplareActual=" + nrExemplareActual
                 + ", nrExemplareTotale=" + nrExemplareTotale + "]";
     }
-
-
-
 
 
 }
